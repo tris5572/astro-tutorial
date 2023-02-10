@@ -1,23 +1,37 @@
 ---
+const pageTitle = 'About Me';
+
+const identity = {
+	firstName: 'Sarah',
+	country: 'Canada',
+	occupation: 'Technical Writer',
+	hobbies: ['photography', 'birdwatching', 'baseball'],
+};
+
+const skills = ['HTML', 'CSS', 'JavaScript', 'React', 'Astro', 'Writing Docs'];
+const happy = true;
+const finished = false;
+const goal = 3;
+
+// デプロイ時のサブディレクトリを考慮したリンク文字列を生成する。
+function href(s: string): string {
+	return `${import.meta.env.BASE_URL}${s}`;
+}
 ---
 
 <html lang="jp">
 	<head>
 		<meta charset="utf-8" />
-		<link
-			rel="icon"
-			type="image/svg+xml"
-			href={`${import.meta.env.BASE_URL}favicon.svg`}
-		/>
+		<link rel="icon" type="image/svg+xml" href={href('favicon.svg')} />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
+		<title>{pageTitle}</title>
 	</head>
 	<body>
-		<a href={`${import.meta.env.BASE_URL}`}>Home</a>
-		<a href={`${import.meta.env.BASE_URL}about/`}>About</a>
-		<a href={`${import.meta.env.BASE_URL}blog/`}>Blog</a>
-		<h1>自分について</h1>
+		<a href={href('')}>Home</a>
+		<a href={href('about/')}>About</a>
+		<a href={href('blog/')}>Blog</a>
+		<h1>{pageTitle}</h1>
 		<h2>... and my new Astro site!</h2>
 
 		<p>
@@ -29,5 +43,27 @@
 			This site will update as I complete more of the tutorial, so keep checking
 			back and see how my journey is going!
 		</p>
+
+		<p>プロフィール</p>
+		<ul>
+			<li>My Name is {identity.firstName}</li>
+			<li>
+				I live in {identity.country} and I work as a {identity.occupation}.
+			</li>
+			{
+				identity.hobbies.length >= 2 && (
+					<li>
+						自分の趣味の2つは{identity.hobbies[0]}と{identity.hobbies[1]}
+					</li>
+				)
+			}
+		</ul>
+		<p>自分のスキル：</p>
+		<ul>
+			{skills.map((skill) => <li>{skill}</li>)}
+		</ul>
+		{happy && <p>HAPPY!</p>}
+		{finished && <p>FINISH!</p>}
+		{goal === 3 ? <p>3日で終わる。</p> : <p>3日じゃない。</p>}
 	</body>
 </html>
